@@ -5,5 +5,5 @@ build:
 
 .PHONY: run
 run:
-	./build/api
+	sudo docker-compose up --build
 

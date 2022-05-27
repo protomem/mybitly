@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/gin-gonic/gin v1.7.7
 	github.com/rjNemo/underscore v0.3.1-0.20220323145844-235b36b7f6e8
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 require golang.org/x/exp v0.0.0-20220314205449-43aec2f8a4e7 // indirect

@@ -6,6 +6,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/protomem/mybitly/internal/config"
 	"github.com/protomem/mybitly/internal/controller"
 	"github.com/protomem/mybitly/internal/repository"
 	"github.com/protomem/mybitly/internal/router"
@@ -17,7 +18,14 @@ import (
 
 func main() {
 
-	client, err := mdb.NewClient("mongodb://db:27017/")
+	cfg, err := config.New(config.PathConfigFile)
+	if err != nil {
+		logrus.Fatal()
+	}
+
+	logrus.Info(cfg)
+
+	client, err := mdb.NewClient(cfg.MongoDB.URI())
 	if err != nil {
 		logrus.Fatal(err)
 	}
@@ -32,7 +40,7 @@ func main() {
 
 	router := router.New(controllers)
 
-	server := httpserver.New(router, 3000)
+	server := httpserver.New(router, cfg.Server.Port)
 
 	go func() {
 		if err := server.Run(); err != nil {
