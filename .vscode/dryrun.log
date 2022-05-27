@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/protomem/WorkSpace/mybitly'
+go build -o ./build/ ./cmd/api
+make: Leaving directory '/home/protomem/WorkSpace/mybitly'
+ 

@@ -19,7 +19,7 @@ type LinkPair struct {
 	Exp types.Time `bson:"exp"`
 }
 
-func (lp *LinkPair) IsValid() bool {
+func (lp *LinkPair) IsAlive() bool {
 
 	currentTime := types.Time(time.Now().Unix())
 	return lp.Exp < currentTime
