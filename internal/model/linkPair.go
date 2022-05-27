@@ -22,6 +22,6 @@ type LinkPair struct {
 func (lp *LinkPair) IsAlive() bool {
 
 	currentTime := types.Time(time.Now().Unix())
-	return lp.Exp < currentTime
+	return lp.Exp > currentTime
 
 }
