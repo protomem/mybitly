@@ -21,8 +21,6 @@ func Sha256Of(input string) []byte {
 
 func GenerateShortToken(data string) (string, error) {
 
-	// TODO Refactor
-
 	hd := hashids.NewData()
 	hd.Salt = _salt
 	hd.MinLength = 4

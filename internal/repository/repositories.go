@@ -1,12 +1,14 @@
 package repository
 
-import "go.mongodb.org/mongo-driver/mongo"
+import (
+	"github.com/protomem/mybitly/pkg/mdb"
+)
 
 type Repositories struct {
 	*LinkPair
 }
 
-func New(client *mongo.Client) *Repositories {
+func New(client *mdb.Client) *Repositories {
 	db := client.Database("mybitly-db")
 
 	return &Repositories{
