@@ -1,12 +1,14 @@
 package service
 
 import (
+	"errors"
 	"time"
 
 	"github.com/protomem/mybitly/internal/dto"
 	"github.com/protomem/mybitly/internal/model"
 	"github.com/protomem/mybitly/internal/types"
 	"github.com/protomem/mybitly/pkg/crypt"
+	u "github.com/rjNemo/underscore"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
@@ -24,20 +26,40 @@ func NewLinkPair(lpr LinkPairRepository) *LinkPair {
 	}
 }
 
-// FIXME Add Validity Check
-
 func (lp *LinkPair) GenerateShortLink(originLink string) (string, error) {
 	return crypt.GenerateShortToken(originLink)
 }
 
 func (lp *LinkPair) FindAll() ([]model.LinkPair, error) {
-	return lp.linkPairRepo.FindAll(bson.D{{}})
+
+	filter := bson.D{{}}
+	linkPairs, err := lp.linkPairRepo.FindAll(filter)
+	if err != nil {
+		return nil, err
+	}
+
+	aliveLinkPairs := u.Filter(linkPairs, func(n model.LinkPair) bool { return n.IsAlive() })
+	if len(aliveLinkPairs) == 0 {
+		return nil, errors.New("no live short links")
+	}
+
+	return aliveLinkPairs, nil
+
 }
 
 func (lp *LinkPair) FindByShortLink(shortLink string) (model.LinkPair, error) {
 
 	filter := bson.D{{Key: "shortLink", Value: shortLink}}
-	return lp.linkPairRepo.Find(filter)
+	linkPair, err := lp.linkPairRepo.Find(filter)
+	if err != nil {
+		return linkPair, err
+	}
+
+	if !linkPair.IsAlive() {
+		return linkPair, errors.New("this short link is dead")
+	}
+
+	return linkPair, nil
 
 }
 

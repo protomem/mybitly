@@ -21,8 +21,6 @@ func NewLinkPair(db *mongo.Database) *LinkPair {
 	}
 }
 
-// TODO Implement all methhods
-
 func (lp *LinkPair) FindAll(filter interface{}) ([]model.LinkPair, error) {
 
 	var linkPairs []model.LinkPair
