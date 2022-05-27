@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	_defautlTTL = 5 * time.Minute
+	_defautlTTL = 5 * 24 * time.Hour
 )
 
 type LinkPair struct {
