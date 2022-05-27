@@ -7,5 +7,6 @@ type (
 		FindAll(filter interface{}) ([]model.LinkPair, error)
 		Find(filter interface{}) (model.LinkPair, error)
 		Create(model.LinkPair) error
+		Delete(filter interface{}) error
 	}
 )

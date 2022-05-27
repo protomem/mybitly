@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/protomem/mybitly/internal/model"
@@ -83,6 +84,21 @@ func (lp *LinkPair) Create(linkPair model.LinkPair) error {
 	_, err := lp.coll.InsertOne(context.Background(), linkPair)
 	if err != nil {
 		return err
+	}
+
+	return nil
+
+}
+
+func (lp *LinkPair) Delete(filter interface{}) error {
+
+	res, err := lp.coll.DeleteOne(context.Background(), filter)
+	if err != nil {
+		return err
+	}
+
+	if res.DeletedCount == 0 {
+		return errors.New("not linkPairs were deleted")
 	}
 
 	return nil

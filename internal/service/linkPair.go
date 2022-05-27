@@ -68,3 +68,10 @@ func (lp *LinkPair) Create(linkPair dto.LinkPairCreate) (model.LinkPair, error) 
 	return linkPairFromRepo, nil
 
 }
+
+func (lp *LinkPair) DeleteByShortLink(shortLink string) error {
+
+	filter := bson.D{{Key: "shortLink", Value: shortLink}}
+	return lp.linkPairRepo.Delete(filter)
+
+}

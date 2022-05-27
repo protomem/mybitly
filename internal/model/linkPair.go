@@ -13,10 +13,10 @@ const (
 type LinkPair struct {
 	Model
 
-	ShortLink  string `bson:"shortLink"`
-	OriginLink string `bson:"originLink"`
+	ShortLink  string `bson:"shortLink" json:"shortLink"`
+	OriginLink string `bson:"originLink" json:"originLink"`
 
-	Exp types.Time `bson:"exp"`
+	Exp types.Time `bson:"exp" json:"exp"`
 }
 
 func (lp *LinkPair) IsAlive() bool {
