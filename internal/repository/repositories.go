@@ -6,6 +6,7 @@ import (
 
 type Repositories struct {
 	*LinkPair
+	*User
 }
 
 func New(client *mdb.Client) *Repositories {
@@ -13,5 +14,6 @@ func New(client *mdb.Client) *Repositories {
 
 	return &Repositories{
 		LinkPair: NewLinkPair(db),
+		User:     NewUser(db),
 	}
 }

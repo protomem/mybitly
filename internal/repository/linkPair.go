@@ -12,12 +12,12 @@ import (
 )
 
 type LinkPair struct {
-	coll *mongo.Collection
+	collections *mongo.Collection
 }
 
 func NewLinkPair(db *mongo.Database) *LinkPair {
 	return &LinkPair{
-		coll: db.Collection(model.LinkPairCollectionName),
+		collections: db.Collection(model.LinkPairCollectionName),
 	}
 }
 
@@ -25,7 +25,7 @@ func (lp *LinkPair) FindAll(filter interface{}) ([]model.LinkPair, error) {
 
 	var linkPairs []model.LinkPair
 
-	cur, err := lp.coll.Find(context.Background(), filter)
+	cur, err := lp.collections.Find(context.Background(), filter)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func (lp *LinkPair) FindAll(filter interface{}) ([]model.LinkPair, error) {
 
 func (lp *LinkPair) Find(filter interface{}) (model.LinkPair, error) {
 
-	res := lp.coll.FindOne(context.Background(), filter)
+	res := lp.collections.FindOne(context.Background(), filter)
 
 	if err := res.Err(); err != nil {
 		return model.LinkPair{}, err
@@ -79,7 +79,7 @@ func (lp *LinkPair) Create(linkPair model.LinkPair) error {
 
 	linkPair.ID = types.ID(primitive.NewObjectID())
 
-	_, err := lp.coll.InsertOne(context.Background(), linkPair)
+	_, err := lp.collections.InsertOne(context.Background(), linkPair)
 	if err != nil {
 		return err
 	}
@@ -90,7 +90,7 @@ func (lp *LinkPair) Create(linkPair model.LinkPair) error {
 
 func (lp *LinkPair) Delete(filter interface{}) error {
 
-	res, err := lp.coll.DeleteOne(context.Background(), filter)
+	res, err := lp.collections.DeleteOne(context.Background(), filter)
 	if err != nil {
 		return err
 	}

@@ -26,4 +26,5 @@ func NewClient(uri string) (*Client, error) {
 	return &Client{
 		Client: client,
 	}, nil
+
 }

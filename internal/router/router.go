@@ -16,6 +16,7 @@ func New(controllers *controller.Controllers) *gin.Engine {
 		v1 := api.Group("/v1")
 		{
 			controllers.LinkPair.Route("/linkPairs", v1)
+			controllers.User.Route("/users", v1)
 		}
 	}
 
